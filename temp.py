@@ -2,20 +2,9 @@ import pandas as pd
 
 DataMovies = pd.read_csv("ml-latest-small/movies.csv", sep=",")
 
-MoviesTitle = DataMovies["title"]
-MoviesId = DataMovies["movieId"]
-MoviesGenres = DataMovies["genres"]
-aux = []
-
-def extract(x):
-    aux = []
-    for i in x:
-        aux.append(i)
-    return aux
-
-MoviesTitle = extract(MoviesTitle)
-MoviesId = extract(MoviesId)
-MoviesGenres = extract(MoviesGenres)
+MoviesTitle = DataMovies["title"].values
+MoviesId = DataMovies["movieId"].values
+MoviesGenres = DataMovies["genres"].values
 
 Movies = {}
 recommended = []
@@ -24,16 +13,11 @@ for i in range(len(MoviesTitle)):
     Movies[MoviesId[i]] = [MoviesTitle[i], MoviesGenres[i].split("|"), 6]
 
 
-
 DataRatings = pd.read_csv("ml-latest-small/ratings.csv", sep=",")
 
-RatingsUserId = DataRatings["userId"]
-RatingsMoviesId = DataRatings["movieId"]
-RatingsList = DataRatings["rating"]
-
-RatingsUserId = extract(RatingsUserId)
-RatingsMoviesId = extract(RatingsMoviesId)
-RatingsList = extract(RatingsList)
+RatingsUserId = DataRatings["userId"].values
+RatingsMoviesId = DataRatings["movieId"].values
+RatingsList = DataRatings["rating"].values
 
 Ratings = {}
 users = {}
