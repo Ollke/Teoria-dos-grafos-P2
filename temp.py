@@ -29,6 +29,12 @@ for i in RatingsUserId:
 for i in range(len(RatingsUserId)):
     Ratings[RatingsUserId[i]].append([RatingsMoviesId[i],RatingsList[i]])
 
+for i in range(len(RatingsList)):
+    if Movies[RatingsMoviesId[i]][2] == 6:
+        Movies[RatingsMoviesId[i]][2] = RatingsList[i]
+    else:
+        Movies[RatingsMoviesId[i]][2] = (Movies[RatingsMoviesId[i]][2] + RatingsList[i])/2
+
 adj = int(input("Digite o numero de conexoes que cada usuario pode ter (recomendado 50):"))
 
 for i in Ratings.keys():
