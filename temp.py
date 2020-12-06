@@ -35,24 +35,75 @@ for i in range(len(RatingsList)):
     else:
         Movies[RatingsMoviesId[i]][2] = (Movies[RatingsMoviesId[i]][2] + RatingsList[i])/2
 
+adj = int(input("Digite o numero maximo de conexoes que o usuario pode ter (recomendado 50): "))
 
-adj = int(input("Digite o numero de conexoes que cada usuario pode ter (recomendado 50):"))
+def userFilmes():
+    user = []
+
+    print("Digite a sua lista de filmes(quanto mais melhor)")
+    while True:
+        aux = int(input("\nDigite o ID do filme: "))
+        aux1 = int(input("Digite a nota para o filme: "))
+
+        if (aux1 > 5 or aux1*-1 > 0):
+
+            print("Nota invalida")
+
+        else:
+
+            user.append([aux, aux1])
+
+            if int(input("\nDigite 0 para continuar: ")) != 0:
+                break
+
+    return user
 
 
-
-for i in Ratings.keys():
-    for j in Ratings.keys():
-        if len(usersGraph[i])>adj:
-            break
-
-        if i != j:
-
-            for k in Ratings[i]:
-                if j in usersGraph[i]:
+def MontarGrafo(user, Ratings, usersGraph, adj):
+    for i in user:
+        for j in Ratings.keys():
+            if len(usersGraph["user"]) > adj:
+                break
+            for k in Ratings[j]:
+                if i[0] == k[0] and i[1] == k[1]:
+                    usersGraph["user"].append(j)
+                    usersGraph[j].append("user")
                     break
-                else:
-                    for z in Ratings[j]:
-                        if k[0] == z[0] and z[1] == k[1]:
-                            usersGraph[i].append(j)
-                            break
 
+    return usersGraph
+
+
+while True:
+    usersGraph["user"] = []
+    user = userFilmes()
+    usersGraph = MontarGrafo(user, Ratings, usersGraph, adj)
+
+    if len(usersGraph["user"]) < 5:
+        print("\ndados insuficientes, por favor refaça a sua lista de filmes")
+
+    else:
+        break
+
+for i in usersGraph["user"]:
+    for j in Ratings[i]:
+        if j[1] > 3:
+            if Movies[j[0]][2] > 4:
+                aux = True
+                for k in user:
+                    if k[0] == j[0]:
+                        aux = False
+                        break
+
+                if aux and j[0] not in recommended:
+                    recommended.append(j[0])
+
+
+print("\nRecomendações:")
+
+for i in recommended:
+    print("\n==============================")
+    print(f"{Movies[i][0]} Nota media: %.2f" % Movies[i][2])
+    print("==============================\n")
+
+    if int(input("Digite 0 para parar:")) == 0:
+        break
