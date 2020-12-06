@@ -20,11 +20,11 @@ RatingsMoviesId = DataRatings["movieId"].values
 RatingsList = DataRatings["rating"].values
 
 Ratings = {}
-users = {}
+usersGraph = {}
 
 for i in RatingsUserId:
     Ratings[i] = []
-    users[i] = []
+    usersGraph[i] = []
 
 for i in range(len(RatingsUserId)):
     Ratings[RatingsUserId[i]].append([RatingsMoviesId[i],RatingsList[i]])
@@ -35,18 +35,24 @@ for i in range(len(RatingsList)):
     else:
         Movies[RatingsMoviesId[i]][2] = (Movies[RatingsMoviesId[i]][2] + RatingsList[i])/2
 
+
 adj = int(input("Digite o numero de conexoes que cada usuario pode ter (recomendado 50):"))
+
+
 
 for i in Ratings.keys():
     for j in Ratings.keys():
-        if len(users[i])>adj:
+        if len(usersGraph[i])>adj:
             break
 
         if i != j:
+
             for k in Ratings[i]:
-                if j not in users[i]:
-                        for z in Ratings[j]:
-                            if k[0] == z[0] and z[1] == k[1]:
-                                users[i].append(j)
-                                break
+                if j in usersGraph[i]:
+                    break
+                else:
+                    for z in Ratings[j]:
+                        if k[0] == z[0] and z[1] == k[1]:
+                            usersGraph[i].append(j)
+                            break
 
