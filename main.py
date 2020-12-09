@@ -83,23 +83,26 @@ while True:
 
     else:
         break
+for z in user:
+    if z[1] > 3:
+        for i in usersGraph["user"]:
+
+            genres = Movies[z[0]][1]
+            for g in genres:
+                for r in Ratings[i]:
+                    if r[1] > 3 and g in Movies[r[0]][1]:
+                        if Movies[r[0]][2] > 4:
+                            aux = True
+                            for k in user:
+                                if k[0] == r[0]:
+                                    aux = False
+                                    break
+
+                            if aux and r[0] not in recommended:
+                                recommended.append(r[0])
+
 
 for i in usersGraph["user"]:
-    for z in user:
-        genres = Movies[z[0]][1]
-        for g in genres:
-            for r in Ratings[i]:
-                if r[1] > 3 and g in Movies[r[0]][1]:
-                    if Movies[r[0]][2] > 4:
-                        aux = True
-                        for k in user:
-                            if k[0] == r[0]:
-                                aux = False
-                                break
-
-                        if aux and r[0] not in recommended:
-                            recommended.append(r[0])
-
     for j in Ratings[i]:
         if j[1] > 3:
             if Movies[j[0]][2] > 4:
